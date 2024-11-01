@@ -301,6 +301,28 @@ export class UiManager {
                     channelIdInput.value = channelId;
                 });
             }
+
+            // Initialize AI prompt from local storage
+            const aiPromptInput = document.getElementById('aiPrompt');
+            if (aiPromptInput) {
+                const savedPrompt = localStorage.getItem('aiPrompt');
+                aiPromptInput.value = savedPrompt || '';
+                aiPromptInput.addEventListener('input', () => {
+                    localStorage.setItem('aiPrompt', aiPromptInput.value);
+                });
+            }
+
+            // Add event listener for reset button
+            const resetPromptButton = document.getElementById('resetPromptButton');
+            if (resetPromptButton) {
+                resetPromptButton.addEventListener('click', () => {
+                    const defaultPrompt = 'Enter your default prompt here'; // Define your default prompt
+                    if (aiPromptInput) {
+                        aiPromptInput.value = defaultPrompt;
+                        localStorage.setItem('aiPrompt', defaultPrompt);
+                    }
+                });
+            }
         } catch (error) {
             console.error('Error initializing UI:', error);
             this.showError('Failed to initialize the application');
