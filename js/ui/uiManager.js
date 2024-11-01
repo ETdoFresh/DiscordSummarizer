@@ -31,16 +31,18 @@ export class UiManager {
             smartypants: true
         });
 
-        initializeUI.call(this);
-    }
+        // Bind all methods to this instance
+        this.toggleToPresent = toggleToPresent.bind(this);
+        this.updateProgress = updateProgress.bind(this);
+        this.displayMessages = displayMessages.bind(this);
+        this.updateHistoryList = updateHistoryList.bind(this);
+        this.showError = showError.bind(this);
+        this.hideError = hideError.bind(this);
+        this.initializeUI = initializeUI.bind(this);
+        this.populateServerDropdown = populateServerDropdown.bind(this);
+        this.populateChannelDropdown = populateChannelDropdown.bind(this);
 
-    toggleToPresent = toggleToPresent;
-    updateProgress = updateProgress;
-    displayMessages = displayMessages;
-    updateHistoryList = updateHistoryList;
-    showError = showError;
-    hideError = hideError;
-    initializeUI = initializeUI;
-    populateServerDropdown = populateServerDropdown;
-    populateChannelDropdown = populateChannelDropdown;
+        // Initialize UI after binding methods
+        this.initializeUI();
+    }
 }

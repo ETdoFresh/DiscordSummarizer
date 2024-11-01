@@ -1,5 +1,3 @@
-import { fetchMessagesPage } from './fetchMessagesPage.js';
-
 /**
  * @description Fetches all messages between two dates
  * @param {string} channelId - Discord channel ID
@@ -34,7 +32,7 @@ export async function getAllMessagesBetweenDates(channelId, userToken, fromDate,
                 await new Promise(resolve => setTimeout(resolve, this.RATE_LIMIT_DELAY));
             }
 
-            const messages = await fetchMessagesPage(channelId, userToken, currentBefore);
+            const messages = await this.fetchMessagesPage(channelId, userToken, currentBefore);
             
             if (!messages.length) {
                 hasMore = false;

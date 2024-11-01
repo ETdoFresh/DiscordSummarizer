@@ -1,5 +1,3 @@
-import { handleResponse } from './handleResponse.js';
-
 /**
  * @description Fetches a page of messages from Discord
  * @param {string} channelId - Discord channel ID
@@ -21,12 +19,12 @@ export async function fetchMessagesPage(channelId, userToken, before = null, aft
             }
         });
 
-        return await handleResponse(response);
+        return await this.handleResponse(response);
     } catch (error) {
         if (error.status === 429) {
             // Handle rate limiting
             await new Promise(resolve => setTimeout(resolve, error.retryAfter * 1000));
-            return fetchMessagesPage(channelId, userToken, before, after);
+            return this.fetchMessagesPage(channelId, userToken, before, after);
         }
         throw error;
     }

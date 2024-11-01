@@ -39,15 +39,16 @@ export class DiscordSummarizer {
         this.discordApi = new DiscordApi();
         this.openRouterApi = new OpenRouterApi();
         this.uiManager = uiManager;
-    }
 
-    loadSearches = loadSearches;
-    encodeStoredToken = encodeStoredToken;
-    decodeStoredToken = decodeStoredToken;
-    saveCredentials = saveCredentials;
-    getLastCredentials = getLastCredentials;
-    formatMessages = formatMessages;
-    fetchAndFormat = fetchAndFormat;
-    getSearches = getSearches;
-    getLastSearch = getLastSearch;
+        // Bind all methods to this instance
+        this.loadSearches = loadSearches.bind(this);
+        this.encodeStoredToken = encodeStoredToken.bind(this);
+        this.decodeStoredToken = decodeStoredToken.bind(this);
+        this.saveCredentials = saveCredentials.bind(this);
+        this.getLastCredentials = getLastCredentials.bind(this);
+        this.formatMessages = formatMessages.bind(this);
+        this.fetchAndFormat = fetchAndFormat.bind(this);
+        this.getSearches = getSearches.bind(this);
+        this.getLastSearch = getLastSearch.bind(this);
+    }
 }

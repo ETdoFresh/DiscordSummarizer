@@ -11,16 +11,35 @@ import { fetchUserGuilds } from './discordApi/fetchUserGuilds.js';
 import { fetchGuildChannels } from './discordApi/fetchGuildChannels.js';
 
 export class DiscordApi {
+    API_BASE = 'https://discord.com/api/v9';
+    RATE_LIMIT_DELAY = 500; // 500ms between requests
+
     constructor() {
-        this.API_BASE = 'https://discord.com/api/v9';
         this.dateUtils = new DateUtils();
-        this.RATE_LIMIT_DELAY = 500; // 500ms between requests
     }
 
-    handleResponse = handleResponse;
-    fetchChannelInfo = fetchChannelInfo;
-    fetchMessagesPage = fetchMessagesPage;
-    getAllMessagesBetweenDates = getAllMessagesBetweenDates;
-    fetchUserGuilds = fetchUserGuilds;
-    fetchGuildChannels = fetchGuildChannels;
+    // Use arrow functions to maintain context
+    handleResponse = async (response) => {
+        return handleResponse.call(this, response);
+    };
+
+    fetchChannelInfo = async (channelId, userToken) => {
+        return fetchChannelInfo.call(this, channelId, userToken);
+    };
+
+    fetchMessagesPage = async (channelId, userToken, before = null, after = null) => {
+        return fetchMessagesPage.call(this, channelId, userToken, before, after);
+    };
+
+    getAllMessagesBetweenDates = async (channelId, userToken, fromDate, toDate = null, progressCallback, maxPages = 50) => {
+        return getAllMessagesBetweenDates.call(this, channelId, userToken, fromDate, toDate, progressCallback, maxPages);
+    };
+
+    fetchUserGuilds = async (userToken) => {
+        return fetchUserGuilds.call(this, userToken);
+    };
+
+    fetchGuildChannels = async (guildId, userToken) => {
+        return fetchGuildChannels.call(this, guildId, userToken);
+    };
 }

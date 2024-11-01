@@ -1,8 +1,3 @@
-import { toggleToPresent } from './toggleToPresent.js';
-import { showError } from './showError.js';
-import { displayMessages } from './displayMessages.js';
-import { updateHistoryList } from './updateHistoryList.js';
-
 /**
  * @description Initializes the UI with default values and event handlers
  */
@@ -29,7 +24,7 @@ export async function initializeUI() {
         const toPresentCheckbox = document.getElementById('toPresent');
         if (toPresentCheckbox) {
             toPresentCheckbox.checked = true;
-            toggleToPresent();
+            this.toggleToPresent();
         }
 
         // Load saved credentials from the summarizer
@@ -73,8 +68,9 @@ export async function initializeUI() {
         // Load and display last search
         const lastSearch = this.summarizer.getLastSearch();
         if (lastSearch) {
-            displayMessages(lastSearch);
-            updateHistoryList();
+            // Use the bound displayMessages method
+            this.displayMessages.call(this, lastSearch);
+            this.updateHistoryList.call(this);
         }
 
         // Populate server dropdown
@@ -124,6 +120,6 @@ export async function initializeUI() {
         }
     } catch (error) {
         console.error('Error initializing UI:', error);
-        showError('Failed to initialize the application');
+        this.showError('Failed to initialize the application');
     }
 }

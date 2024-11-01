@@ -1,6 +1,3 @@
-import { saveCredentials } from './saveCredentials.js';
-import { formatMessages } from './formatMessages.js';
-
 /**
  * @description Fetches and formats Discord messages
  * @param {string} channelId - Discord channel ID
@@ -19,7 +16,7 @@ export async function fetchAndFormat(channelId, userToken, openrouterToken, from
         }
 
         console.log('Saving credentials before fetch...');
-        saveCredentials(channelId, userToken, openrouterToken);
+        this.saveCredentials(channelId, userToken, openrouterToken);
 
         progressCallback('Fetching channel information...');
         const channelInfo = await this.discordApi.fetchChannelInfo(channelId, userToken);
@@ -33,7 +30,7 @@ export async function fetchAndFormat(channelId, userToken, openrouterToken, from
             this.MAX_PAGES
         );
         
-        const result = await formatMessages(messages, channelId, channelInfo, openrouterToken, progressCallback);
+        const result = await this.formatMessages(messages, channelId, channelInfo, openrouterToken, progressCallback);
 
         // Update search history
         this.searches.unshift(result);
