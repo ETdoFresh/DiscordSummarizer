@@ -1,14 +1,13 @@
 # Discord Channel Summarizer
 
-A web application that provides summaries of Discord channel messages. The app stores summaries locally and maintains a history of previous summaries.
+A web application that provides AI-powered summaries of Discord channel messages using OpenRouter's API. The app stores summaries locally and maintains a history of previous summaries.
 
 ## Features
 
-- Fetch and summarize Discord channel messages
-- Group messages by day
+- AI-powered summarization of Discord channel messages
+- Group messages by day with detailed statistics
 - Show message counts and unique users
-- Identify most active users
-- Find top discussion topics
+- Identify most active users and key discussion topics
 - Store summary history using localStorage
 - Discord-like dark theme UI
 
@@ -35,48 +34,63 @@ A web application that provides summaries of Discord channel messages. The app s
 5. Look for a request to "messages"
 6. In the request headers, find and copy the "authorization" value
 
-**Important Security Note**: Your Discord token is sensitive information. Never share it with others. This application stores it only in memory and never saves it to localStorage.
+### 4. Get OpenRouter API Key
+
+1. Visit [OpenRouter](https://openrouter.ai/)
+2. Create an account or sign in
+3. Navigate to your API settings
+4. Generate and copy your API key
+
+**Important Security Note**: Your Discord token and OpenRouter API key are sensitive information. Never share them with others. This application stores them only in memory and never saves them to localStorage.
 
 ## Using the Summarizer
 
 1. Enter the Channel ID of the channel you want to summarize
-2. Enter your Discord token
-3. Click "Get Summary" to generate a summary of the channel's messages
+2. Enter your Discord token and OpenRouter API key
+3. Select the date range for messages to summarize
+4. Click "Get Summary" to generate an AI-powered summary of the channel's messages
 
-## Deployment
+## Project Structure
 
-1. Copy all files to your web server:
-   - index.html
-   - script.js
-   - README.md
-
-The application can be served from any static web server or file system.
+```
+├── css/
+│   ├── base.css
+│   ├── content.css
+│   ├── forms.css
+│   ├── layout.css
+│   ├── markdown.css
+│   ├── status.css
+│   └── utilities.css
+├── js/
+│   ├── api/
+│   │   ├── discordApi/
+│   │   └── openRouterApi/
+│   ├── discordSummarizer/
+│   ├── main/
+│   ├── ui/
+│   └── utils/
+└── index.html
+```
 
 ## Local Storage
 
 The application uses browser localStorage to maintain:
 - Up to 10 most recent summaries
 - Channel IDs and timestamps for each summary
-
-## Features
-
-- Message summarization by day
-- Most active users identification
-- Top discussion topics
-- Message count statistics
-- Previous summaries history
-- Dark mode UI matching Discord's theme
+- Previous search parameters (except sensitive credentials)
 
 ## Limitations
 
-- Can only access channels you have permission to read
-- Fetches up to 100 most recent messages per request
-- Summaries are stored locally in the browser
+- Can only access Discord channels you have permission to read
+- Fetches up to 100 messages per API request
+- Summaries are stored locally in your browser
+- API rate limits apply for both Discord and OpenRouter
 
 ## Privacy & Security
 
 This application:
 - Only accesses channels you have permission to read
 - Stores data locally in your browser
-- Never saves your Discord token
-- Makes requests directly to Discord's API
+- Never saves your Discord token or OpenRouter API key
+- Makes requests directly to Discord and OpenRouter APIs
+- Does not collect or transmit any personal information
