@@ -2,6 +2,8 @@
 
 A web application that provides AI-powered summaries of Discord channel messages using OpenRouter's API. The app stores summaries locally and maintains a history of previous summaries.
 
+![Discord Channel Summarizer Preview](img/chrome_nrPEax1TXt.png)
+
 ## Features
 
 - AI-powered summarization of Discord channel messages
