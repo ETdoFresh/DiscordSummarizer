@@ -28,6 +28,16 @@
         </div>
 
         <form class="input-group" onsubmit="return false;">
+            <label for="serverSelect">Select Server:</label>
+            <select id="serverSelect" required>
+                <option value="">Select a server</option>
+            </select>
+
+            <label for="channelSelect">Select Channel:</label>
+            <select id="channelSelect" required>
+                <option value="">Select a channel</option>
+            </select>
+
             <label for="channelId">Channel ID:</label>
             <input type="text" id="channelId" placeholder="Enter Discord Channel ID" required>
             <div class="help-text">Right-click the channel and select "Copy ID"</div>

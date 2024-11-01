@@ -206,4 +206,47 @@ export class DiscordApi {
             throw new Error(`Failed to fetch messages: ${error.message}`);
         }
     }
+
+    /**
+     * @description Fetches all servers (guilds) for the user
+     * @param {string} userToken - Discord auth token
+     * @returns {Promise<Array>} Array of guilds
+     */
+    async fetchUserGuilds(userToken) {
+        try {
+            const response = await fetch(`${this.API_BASE}/users/@me/guilds`, {
+                headers: {
+                    'Authorization': userToken,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return await this.handleResponse(response);
+        } catch (error) {
+            console.error('Error fetching user guilds:', error);
+            throw new Error(`Failed to fetch user guilds: ${error.message}`);
+        }
+    }
+
+    /**
+     * @description Fetches all channels for a given server (guild)
+     * @param {string} guildId - Discord guild ID
+     * @param {string} userToken - Discord auth token
+     * @returns {Promise<Array>} Array of channels
+     */
+    async fetchGuildChannels(guildId, userToken) {
+        try {
+            const response = await fetch(`${this.API_BASE}/guilds/${guildId}/channels`, {
+                headers: {
+                    'Authorization': userToken,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return await this.handleResponse(response);
+        } catch (error) {
+            console.error('Error fetching guild channels:', error);
+            throw new Error(`Failed to fetch guild channels: ${error.message}`);
+        }
+    }
 }

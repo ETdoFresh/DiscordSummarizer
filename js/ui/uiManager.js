@@ -3,12 +3,14 @@
  * @description Manages the user interface and interactions for the Discord summarizer
  */
 import { DateUtils } from '../utils/dateUtils.js';
+import { DiscordApi } from '../api/discordApi.js';
 
 export class UiManager {
     constructor(summarizer) {
         console.log('Initializing UiManager');
         this.summarizer = summarizer;
         this.dateUtils = new DateUtils();
+        this.discordApi = new DiscordApi();
         
         // Configure marked options for security and rendering
         marked.setOptions({
@@ -19,6 +21,8 @@ export class UiManager {
             smartLists: true,
             smartypants: true
         });
+
+        this.initializeUI();
     }
 
     /**
@@ -203,7 +207,7 @@ export class UiManager {
     /**
      * @description Initializes the UI with default values and event handlers
      */
-    initializeUI() {
+    async initializeUI() {
         try {
             console.log('Initializing UI...');
             
@@ -273,9 +277,86 @@ export class UiManager {
                 this.displayMessages(lastSearch);
                 this.updateHistoryList();
             }
+
+            // Populate server dropdown
+            await this.populateServerDropdown();
+
+            // Add event listener for server selection change
+            const serverSelect = document.getElementById('serverSelect');
+            if (serverSelect) {
+                serverSelect.addEventListener('change', async (event) => {
+                    const guildId = event.target.value;
+                    if (guildId) {
+                        await this.populateChannelDropdown(guildId);
+                    }
+                });
+            }
+
+            // Add event listener for channel selection change
+            const channelSelect = document.getElementById('channelSelect');
+            const channelIdInput = document.getElementById('channelId');
+            if (channelSelect && channelIdInput) {
+                channelSelect.addEventListener('change', (event) => {
+                    const channelId = event.target.value;
+                    channelIdInput.value = channelId;
+                });
+            }
         } catch (error) {
             console.error('Error initializing UI:', error);
             this.showError('Failed to initialize the application');
+        }
+    }
+
+    /**
+     * @description Populates the server dropdown with user's guilds
+     */
+    async populateServerDropdown() {
+        try {
+            const userTokenInput = document.getElementById('userToken');
+            const serverSelect = document.getElementById('serverSelect');
+
+            if (userTokenInput && serverSelect) {
+                const userToken = userTokenInput.value;
+                const guilds = await this.discordApi.fetchUserGuilds(userToken);
+
+                serverSelect.innerHTML = '<option value="">Select a server</option>';
+                guilds.forEach(guild => {
+                    const option = document.createElement('option');
+                    option.value = guild.id;
+                    option.textContent = guild.name;
+                    serverSelect.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('Error populating server dropdown:', error);
+            this.showError('Failed to load servers');
+        }
+    }
+
+    /**
+     * @description Populates the channel dropdown with channels from the selected guild
+     * @param {string} guildId - The ID of the selected guild
+     */
+    async populateChannelDropdown(guildId) {
+        try {
+            const userTokenInput = document.getElementById('userToken');
+            const channelSelect = document.getElementById('channelSelect');
+
+            if (userTokenInput && channelSelect) {
+                const userToken = userTokenInput.value;
+                const channels = await this.discordApi.fetchGuildChannels(guildId, userToken);
+
+                channelSelect.innerHTML = '<option value="">Select a channel</option>';
+                channels.forEach(channel => {
+                    const option = document.createElement('option');
+                    option.value = channel.id;
+                    option.textContent = channel.name;
+                    channelSelect.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('Error populating channel dropdown:', error);
+            this.showError('Failed to load channels');
         }
     }
 }
