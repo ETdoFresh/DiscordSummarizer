@@ -14,6 +14,7 @@ import { formatMessages } from './discordSummarizer/formatMessages.js';
 import { fetchAndFormat } from './discordSummarizer/fetchAndFormat.js';
 import { getSearches } from './discordSummarizer/getSearches.js';
 import { getLastSearch } from './discordSummarizer/getLastSearch.js';
+import { removeSearch } from './discordSummarizer/removeSearch.js';
 
 export class DiscordSummarizer {
     /**
@@ -50,5 +51,6 @@ export class DiscordSummarizer {
         this.fetchAndFormat = fetchAndFormat.bind(this);
         this.getSearches = getSearches.bind(this);
         this.getLastSearch = getLastSearch.bind(this);
+        this.removeSearch = removeSearch.bind(this);
     }
 }

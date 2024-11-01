@@ -39,6 +39,7 @@ export function updateHistoryList() {
                 <span class="history-date">To: ${toDate}</span><br>
                 <span class="history-count">${result.messageCount} messages</span><br>
                 <span class="history-timestamp">Searched: ${this.dateUtils.formatDate(result.timestamp)}</span>
+                <button class="history-delete" aria-label="Delete search" title="Delete search">×</button>
             `;
 
             historyItem.innerHTML = DOMPurify.sanitize(itemHtml, { USE_PROFILES: { html: true } });
@@ -53,6 +54,26 @@ export function updateHistoryList() {
                 
                 this.displayMessages(result);
             };
+
+            // Add click handler for delete button
+            const deleteButton = historyItem.querySelector('.history-delete');
+            if (deleteButton) {
+                deleteButton.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent triggering the historyItem click
+                    this.summarizer.removeSearch(index);
+                    this.updateHistoryList(); // Refresh the list
+                });
+
+                // Add keyboard support for delete button
+                deleteButton.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.summarizer.removeSearch(index);
+                        this.updateHistoryList();
+                    }
+                });
+            }
 
             historyItem.addEventListener('click', handleSelect);
             historyItem.addEventListener('keydown', (e) => {
