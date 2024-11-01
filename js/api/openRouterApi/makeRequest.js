@@ -24,7 +24,9 @@ export async function makeRequest(requestData, retryCount = 0) {
             throw new Error(errorMessage);
         }
 
-        return await response.json();
+        const jsonResponse = await response.json();
+        console.log('AI Response:', jsonResponse);
+        return jsonResponse;
     } catch (error) {
         if (retryCount < MAX_RETRIES) {
             // Network error - retry
