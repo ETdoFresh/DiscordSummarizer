@@ -14,7 +14,9 @@ async function initializeApplication() {
         console.log('Initializing application...');
         
         // Initialize core components
+        console.log('Creating DiscordSummarizer instance...');
         const summarizer = new DiscordSummarizer();
+        console.log('Creating UiManager instance...');
         const uiManager = new UiManager(summarizer);
 
         await setupUserInterface(uiManager);
@@ -30,7 +32,7 @@ async function initializeApplication() {
  */
 async function setupUserInterface(uiManager) {
     try {
-        console.log('Initializing UI...');
+        console.log('Setting up user interface...');
         uiManager.initializeUI();
         
         setupEventListeners(uiManager);
@@ -45,6 +47,8 @@ async function setupUserInterface(uiManager) {
  * @param {UiManager} uiManager - UI Manager instance
  */
 function setupEventListeners(uiManager) {
+    console.log('Setting up event listeners...');
+    
     // Set up "to present" checkbox handler
     const toPresentCheckbox = document.getElementById('toPresent');
     if (toPresentCheckbox) {
@@ -87,6 +91,16 @@ async function handleFetchClick(uiManager) {
             toPresent: document.getElementById('toPresent')?.checked,
             toDate: document.getElementById('toDate')?.value?.trim()
         };
+
+        // Log input values (safely)
+        console.log('Form inputs:', {
+            channelId: inputs.channelId ? '[ID exists]' : '[No ID]',
+            userToken: inputs.userToken ? '[Token exists]' : '[No token]',
+            openrouterToken: inputs.openrouterToken ? '[Token exists]' : '[No token]',
+            fromDate: inputs.fromDate,
+            toPresent: inputs.toPresent,
+            toDate: inputs.toDate
+        });
 
         // Validate inputs
         if (!validateInputs(inputs, uiManager)) {

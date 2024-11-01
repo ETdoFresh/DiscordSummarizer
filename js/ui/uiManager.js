@@ -6,6 +6,7 @@ import { DateUtils } from '../utils/dateUtils.js';
 
 export class UiManager {
     constructor(summarizer) {
+        console.log('Initializing UiManager');
         this.summarizer = summarizer;
         this.dateUtils = new DateUtils();
         
@@ -204,15 +205,17 @@ export class UiManager {
      */
     initializeUI() {
         try {
+            console.log('Initializing UI...');
+            
             // Set default dates
             const now = new Date();
-            const oneHourAgo = new Date(now.getTime() - (60 * 60 * 1000));
+            const oneDayAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
             
             const fromDateInput = document.getElementById('fromDate');
             const toDateInput = document.getElementById('toDate');
             
             if (fromDateInput) {
-                fromDateInput.value = this.dateUtils.dateToLocalString(oneHourAgo);
+                fromDateInput.value = this.dateUtils.dateToLocalString(oneDayAgo);
             }
             
             if (toDateInput) {
@@ -226,20 +229,42 @@ export class UiManager {
                 this.toggleToPresent();
             }
 
-            // Load saved credentials
+            // Load saved credentials from the summarizer
+            console.log('Loading saved credentials...');
             const lastCreds = this.summarizer.getLastCredentials();
+            console.log('Last credentials loaded:', lastCreds ? 'Yes' : 'No');
+            
             if (lastCreds) {
-                const inputs = {
-                    channelId: document.getElementById('channelId'),
-                    userToken: document.getElementById('userToken'),
-                    openrouterToken: document.getElementById('openrouterToken')
-                };
+                console.log('Setting credentials in UI...');
+                const userTokenInput = document.getElementById('userToken');
+                const channelIdInput = document.getElementById('channelId');
+                const openrouterTokenInput = document.getElementById('openrouterToken');
 
-                Object.entries(inputs).forEach(([key, input]) => {
-                    if (input && lastCreds[key]) {
-                        input.value = lastCreds[key];
-                    }
-                });
+                // Set Discord token
+                if (userTokenInput && lastCreds.token) {
+                    console.log('Setting Discord token:', lastCreds.token ? '[Token exists]' : '[No token]');
+                    userTokenInput.value = lastCreds.token;
+                } else {
+                    console.log('Unable to set Discord token - input or value missing');
+                }
+
+                // Set Channel ID
+                if (channelIdInput && lastCreds.channelId) {
+                    console.log('Setting Channel ID:', lastCreds.channelId ? '[ID exists]' : '[No ID]');
+                    channelIdInput.value = lastCreds.channelId;
+                } else {
+                    console.log('Unable to set Channel ID - input or value missing');
+                }
+
+                // Set OpenRouter token
+                if (openrouterTokenInput && lastCreds.openrouterToken) {
+                    console.log('Setting OpenRouter token:', lastCreds.openrouterToken ? '[Token exists]' : '[No token]');
+                    openrouterTokenInput.value = lastCreds.openrouterToken;
+                } else {
+                    console.log('Unable to set OpenRouter token - input or value missing');
+                }
+            } else {
+                console.log('No saved credentials found');
             }
 
             // Load and display last search

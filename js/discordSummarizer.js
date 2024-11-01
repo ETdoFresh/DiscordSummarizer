@@ -19,7 +19,10 @@ export class DiscordSummarizer {
         
         // Load credentials from secure storage
         this.lastChannelId = localStorage.getItem('lastChannelId') || '';
-        this.lastToken = this.decodeStoredToken(localStorage.getItem('lastToken')) || '';
+        const storedToken = localStorage.getItem('lastToken');
+        console.log('Loading token from localStorage:', storedToken ? '[Token exists]' : '[No token found]');
+        this.lastToken = this.decodeStoredToken(storedToken) || '';
+        console.log('Decoded token:', this.lastToken ? '[Token decoded]' : '[No token or decode failed]');
         this.lastOpenRouterToken = this.decodeStoredToken(localStorage.getItem('lastOpenRouterToken')) || '';
         
         // Initialize utility classes
@@ -51,7 +54,12 @@ export class DiscordSummarizer {
      * @returns {string} Encoded token
      */
     encodeStoredToken(token) {
-        return token ? btoa(token) : '';
+        if (!token) {
+            console.log('No token provided for encoding');
+            return '';
+        }
+        console.log('Encoding token for storage');
+        return btoa(token);
     }
 
     /**
@@ -62,8 +70,16 @@ export class DiscordSummarizer {
      */
     decodeStoredToken(encoded) {
         try {
-            return encoded ? atob(encoded) : '';
-        } catch {
+            if (!encoded) {
+                console.log('No encoded token provided for decoding');
+                return '';
+            }
+            console.log('Attempting to decode token');
+            const decoded = atob(encoded);
+            console.log('Token decoded successfully');
+            return decoded;
+        } catch (error) {
+            console.error('Error decoding token:', error);
             return '';
         }
     }
@@ -75,13 +91,21 @@ export class DiscordSummarizer {
      * @param {string} openrouterToken - OpenRouter API token
      */
     saveCredentials(channelId, token, openrouterToken) {
+        console.log('Saving credentials...');
+        console.log('Channel ID:', channelId ? '[ID provided]' : '[No ID]');
+        console.log('Discord token:', token ? '[Token provided]' : '[No token]');
+        
         this.lastChannelId = channelId;
         this.lastToken = token;
         this.lastOpenRouterToken = openrouterToken;
         
         localStorage.setItem('lastChannelId', channelId);
-        localStorage.setItem('lastToken', this.encodeStoredToken(token));
+        const encodedToken = this.encodeStoredToken(token);
+        console.log('Saving encoded token to localStorage:', encodedToken ? '[Token encoded]' : '[No token to encode]');
+        localStorage.setItem('lastToken', encodedToken);
         localStorage.setItem('lastOpenRouterToken', this.encodeStoredToken(openrouterToken));
+        
+        console.log('Credentials saved to localStorage');
     }
 
     /**
@@ -89,6 +113,8 @@ export class DiscordSummarizer {
      * @returns {Object} Object containing stored credentials
      */
     getLastCredentials() {
+        console.log('Getting last credentials...');
+        console.log('Last token exists:', this.lastToken ? 'Yes' : 'No');
         return {
             channelId: this.lastChannelId,
             token: this.lastToken,
@@ -145,6 +171,7 @@ export class DiscordSummarizer {
                 throw new Error('Missing required parameters');
             }
 
+            console.log('Saving credentials before fetch...');
             this.saveCredentials(channelId, userToken, openrouterToken);
 
             progressCallback('Fetching channel information...');
