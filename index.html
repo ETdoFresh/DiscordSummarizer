@@ -78,11 +78,15 @@
             </div>
 
             <label for="aiPrompt">AI Prompt:</label>
-            <input type="text" id="aiPrompt" placeholder="Enter your AI prompt">
-            <button type="button" id="resetPromptButton">Reset to Default Prompt</button>
-                       
-            <button type="submit" id="fetchButton">Fetch Messages</button>
+            <div class="prompt-container">
+                <textarea id="aiPrompt" placeholder="Enter your AI prompt" rows="4"></textarea>
+                <button type="button" id="resetPromptButton" class="reset-prompt-btn">Reset to Default Prompt</button>
+            </div>
         </form>
+
+        <div class="button-container">
+            <button type="submit" id="fetchButton">Fetch Messages</button>
+        </div>
 
         <div id="error" class="error" role="alert" aria-live="assertive"></div>
         <div id="progress" class="progress" role="status" aria-live="polite"></div>
