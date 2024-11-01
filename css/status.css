@@ -1,0 +1,39 @@
+/* Status Messages */
+.error {
+    color: var(--error-color);
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(237, 66, 69, 0.1);
+    border-radius: 4px;
+    border-left: 4px solid var(--error-color);
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.progress {
+    color: var(--accent-primary);
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(88, 101, 242, 0.1);
+    border-radius: 4px;
+    border-left: 4px solid var(--accent-primary);
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.help-text {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+/* Warning Messages */
+.warning {
+    background-color: rgba(250, 166, 26, 0.1);
+    border-left: 4px solid var(--warning-color);
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 0 4px 4px 0;
+    color: var(--text-secondary);
+}

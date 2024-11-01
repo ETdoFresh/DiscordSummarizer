@@ -1,0 +1,50 @@
+/* Content Containers */
+.messages-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.history-container {
+    margin-top: 20px;
+}
+
+/* History Items */
+.history-item {
+    padding: 12px;
+    margin: 8px 0;
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    border: 1px solid transparent;
+}
+
+.history-item:hover,
+.history-item:focus {
+    background-color: #4f545c;
+    transform: translateY(-1px);
+    border-color: var(--accent-primary);
+    outline: none;
+}
+
+.history-item:active {
+    transform: translateY(0);
+}
+
+.history-timestamp {
+    font-size: 0.8em;
+    color: var(--text-muted);
+}
+
+.history-count {
+    font-size: 0.9em;
+    color: var(--accent-primary);
+}
+
+.history-date {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}

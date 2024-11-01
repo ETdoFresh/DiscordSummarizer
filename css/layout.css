@@ -1,0 +1,18 @@
+/* Layout Components */
+.container {
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.date-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}

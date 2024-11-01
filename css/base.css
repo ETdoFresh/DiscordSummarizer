@@ -1,0 +1,25 @@
+/* Base Styles */
+:root {
+    --bg-primary: #36393f;
+    --bg-secondary: #2f3136;
+    --bg-tertiary: #40444b;
+    --text-primary: #dcddde;
+    --text-secondary: #b9bbbe;
+    --text-muted: #72767d;
+    --accent-primary: #5865f2;
+    --accent-secondary: #4752c4;
+    --error-color: #ed4245;
+    --warning-color: #faa61a;
+    --border-color: #202225;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+}
