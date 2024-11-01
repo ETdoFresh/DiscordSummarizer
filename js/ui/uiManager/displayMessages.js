@@ -33,6 +33,7 @@ export function displayMessages(result) {
             const usageHtml = `
                 <h3>Usage Statistics</h3>
                 <ul>
+                    <li>Model: ${result.usage.model}</li>
                     <li>Total Tokens: ${result.usage.total_tokens}</li>
                     <li>Prompt Tokens: ${result.usage.prompt_tokens}</li>
                     <li>Completion Tokens: ${result.usage.completion_tokens}</li>

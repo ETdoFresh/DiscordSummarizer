@@ -60,7 +60,8 @@ export async function summarizeMessages(messages, openrouterToken, progressCallb
                 prompt_tokens: usage.prompt_tokens || 0,
                 completion_tokens: usage.completion_tokens || 0,
                 total_tokens: usage.total_tokens || 0,
-                cost_usd: usage.cost || 0
+                cost_usd: usage.cost || 0,
+                model: data.model || '---'
             }
         };
     } catch (error) {
