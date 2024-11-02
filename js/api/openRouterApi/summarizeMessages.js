@@ -37,7 +37,7 @@ export async function summarizeMessages(messages, openrouterToken, progressCallb
                 'X-Title': 'Discord Message Summarizer'
             },
             body: JSON.stringify({
-                model: 'anthropic/claude-2',
+                model: 'openai/gpt-4o-mini',
                 messages: [{
                     role: 'user',
                     content: prompt
