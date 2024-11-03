@@ -14,7 +14,7 @@ import { summarizeMessages } from './openRouterApi/summarizeMessages.js';
 export class OpenRouterApi {
     constructor() {
         this.API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-        this.MODEL = 'anthropic/claude-2';
+        this.MODEL = 'openai/gpt-4o-mini';
         this.MAX_RETRIES = 2;
         this.RETRY_DELAY = 1000; // 1 second
     }
